@@ -65,4 +65,17 @@ pipeline {
             }
         }
     }
+    post{
+        failure {
+            echo 'Build failed'
+            mail body: 'build failed', subject: 'Build failed!',
+            to: 'devops@learningthoughts.in'
+        }
+        success {
+            echo 'Build Success'
+            mail body: 'build succded', subject: 'Build succded!',
+            to: 'devops@learningthoughts.in'
+
+        }
+    }
 }
