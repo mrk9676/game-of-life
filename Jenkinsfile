@@ -16,6 +16,13 @@ pipeline {
         )
 
         choice(
+            name: 'BUILD_TYPE',
+            choices: ['Debug', 'Release'],
+            description: 'Build Type'
+
+        )
+
+        choice(
             name: 'BranchToBuild',
             choices: ['DeclarativePipeline', 'ScriptedPipeline', 'master'],
             description: 'Branch to be build'
@@ -28,9 +35,24 @@ pipeline {
                 git branch: "${params.BranchToBuild}", url: 'https://github.com/dummyrepos/game-of-life.git'
             }
         }
-        stage('compile') {
+        stage('debug build') {
+            when {
+                allOf {
+                    expression { params.BUILD_TYPE == 'Debug'}
+                }
+            }
             steps {
                 sh 'mvn clean package'
+            }
+        }
+        stage('release build') {
+            when {
+                allOf {
+                    expression { params.BUILD_TYPE == 'Release'}
+                }
+            }
+            steps {
+                sh 'mvn clean install'
             }
         }
         stage('postbuild') {
