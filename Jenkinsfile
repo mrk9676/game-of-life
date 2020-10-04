@@ -13,11 +13,16 @@ node('HRMS&&QA') {
         }
         stage('build') {
             if (responses.BUILD_TYPE == 'DEBUG'){
+                withSonarQubeEnv('SONAR7.1') {
+                    // requires SonarQube Scanner for Maven 3.2+
+                    sh 'mvn org.sonarsource.scanner.maven:sonar-maven-plugin:3.2:sonar'
+                }
                 sh 'mvn clean package'
             }
             if (responses.BUILD_TYPE == 'RELEASE'){
                 sh 'mvn clean install'
             }
+            
             
         }
         stage('testresults'){
