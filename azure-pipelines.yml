@@ -1,12 +1,15 @@
 ---
-name: Game-of-life
+name: my-gol-pipeine-new
 variables:
-        - name: hai
-          value: world
+        - name: var1
+          value: hello
+        - name: var2
+          value: rk
 stages:
-        - stage: Build
+        - stage: mavencompile
           jobs:
-                  - job: mavncompile
+          pool: my_agent_pool
+                  - job: compile job
                     steps:
                             - task: Maven@3
                               inputs:
@@ -14,4 +17,18 @@ stages:
                                       goals: 'compile'
                                       publishJUnitResults: true
                                       testResultsFiles: '**/surefire-reports/TEST-*.xml'
-                                      jdkVersionOption: 'default'
+                                      dkVersionOption: 'default'
+                            - script: echo $(var1) $(var2)
+        - stage: package
+          jobs:
+          pool: my_agent_pool
+                - job: package
+                  steps:
+                          - task: Maven@3
+                            inputs:
+                                      mavenPomFile: 'pom.xml'
+                                      goals: 'package'
+                                      publishJUnitResults: true
+                                      testResultsFiles: '**/*war'
+                                      dkVersionOption: 'default'
+
