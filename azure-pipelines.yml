@@ -8,7 +8,7 @@ variables:
 stages:
         - stage: 'mavencompile'
           jobs:
-                  - job: 'compile job'
+                  - job: 'compile_job'
                     pool: my_agent_pool
                     steps:
                             - task: Maven@3
