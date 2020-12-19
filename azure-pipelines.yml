@@ -6,10 +6,10 @@ variables:
         - name: var2
           value: rk
 stages:
-        - stage: mavencompile
+        - stage: 'mavencompile'
           jobs:
           pool: my_agent_pool
-                  - job: compile job
+                  - job: 'compile job'
                     steps:
                             - task: Maven@3
                               inputs:
@@ -19,7 +19,7 @@ stages:
                                       testResultsFiles: '**/surefire-reports/TEST-*.xml'
                                       dkVersionOption: 'default'
                             - script: echo $(var1) $(var2)
-        - stage: package
+        - stage: 'package'
           jobs:
           pool: my_agent_pool
                 - job: package
