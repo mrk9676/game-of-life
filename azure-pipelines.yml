@@ -8,8 +8,8 @@ variables:
 stages:
         - stage: 'mavencompile'
           jobs:
-          pool: my_agent_pool
                   - job: 'compile job'
+                    pool: my_agent_pool
                     steps:
                             - task: Maven@3
                               inputs:
@@ -21,8 +21,8 @@ stages:
                             - script: echo $(var1) $(var2)
         - stage: 'package'
           jobs:
-          pool: my_agent_pool
                 - job: package
+                  pool: my_agent_pool
                   steps:
                           - task: Maven@3
                             inputs:
